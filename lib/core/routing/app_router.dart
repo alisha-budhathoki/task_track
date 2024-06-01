@@ -12,7 +12,7 @@ class AppRouter {
               builder: (context, state) => const HomeScreen(),
             ),
             GoRoute(
-              path: '/secondScreen3',
+              path: '/secondScreen',
               builder: (context, state) => const SecondScreen(),
             )
           ],
