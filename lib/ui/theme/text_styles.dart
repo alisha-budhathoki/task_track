@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_track/ui/ui.dart';
+import 'package:task_track/ui/ui_index.dart';
 
 class TextStyles {
   TextStyles._();

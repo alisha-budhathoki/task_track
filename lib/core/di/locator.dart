@@ -10,7 +10,7 @@ final GetIt locator = GetIt.instance;
 void setupLocator() {
   locator.registerSingleton<AppRouter>(AppRouter());
 
-  const String bearerToken = '84e272708032b1a385ffdbaa4d8b4010e51b33b3';
+  const bearerToken = '84e272708032b1a385ffdbaa4d8b4010e51b33b3';
 
   Dio dio = Dio(BaseOptions(
     baseUrl: 'https://api.todoist.com/rest/v2/sections',
