@@ -1,9 +1,14 @@
 import 'package:dio/dio.dart';
 
 class ApiInterceptor extends Interceptor {
+  ApiInterceptor({required this.bearerToken});
+
+  final String bearerToken;
+
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     print('Request[${options.method}]=> PATH: ${options.path}');
+    options.headers['Authorization'] = 'Bearer $bearerToken';
     super.onRequest(options, handler);
   }
 

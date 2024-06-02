@@ -10,12 +10,14 @@ final GetIt locator = GetIt.instance;
 void setupLocator() {
   locator.registerSingleton<AppRouter>(AppRouter());
 
+  const String bearerToken = '84e272708032b1a385ffdbaa4d8b4010e51b33b3';
+
   Dio dio = Dio(BaseOptions(
     baseUrl: 'https://api.todoist.com/rest/v2/sections',
     connectTimeout: const Duration(seconds: 5),
     receiveTimeout: const Duration(seconds: 3),
   ))
-    ..interceptors.add(ApiInterceptor());
+    ..interceptors.add(ApiInterceptor(bearerToken: bearerToken));
 
   locator.registerLazySingleton<RemoteSource>(() => RemoteSourceImpl(dio));
 }
