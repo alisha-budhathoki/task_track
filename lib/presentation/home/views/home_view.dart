@@ -1,15 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:task_track/core/di/locator.dart';
-import 'package:task_track/data/services/project_service/project_service.dart';
-import 'package:task_track/presentation/home/cubits/project_list_cubit.dart';
+import 'package:task_track/presentation/home/cubits/project_cubit.dart';
 import 'package:task_track/presentation/home/widgets/widget_index.dart';
-import 'package:task_track/ui/theme/theme_index.dart';
 import 'package:task_track/ui/ui_index.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  HomeViewState createState() => HomeViewState();
+}
+
+class HomeViewState extends State<HomeView> {
+  final TextEditingController _controller = TextEditingController();
+  bool _isButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> _showCreateProjectDialog(BuildContext context) async {
+    await Future.delayed(const Duration(milliseconds: 100)); // Small delay
+    if (context.mounted)
+      showDialog(
+        context: context,
+        builder: (dialogContext) => StatefulBuilder(
+          builder: (context, setState) {
+            return CustomDialog(
+              title: 'Create new Project',
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        _isButtonEnabled = _controller.text.isNotEmpty;
+                      });
+                    },
+                    controller: _controller,
+                    decoration:
+                        const InputDecoration(labelText: 'Project Name'),
+                  ),
+                ],
+              ),
+              firstActionText: 'Cancel',
+              onPressedFirstAction: () {
+                dialogContext.pop();
+              },
+              secondActionText: 'Create',
+              onPressedSecondAction: () {
+                context
+                    .read<ProjectCubit>()
+                    .addProject(projectName: _controller.text);
+                dialogContext.pop();
+              },
+              isSecondActionEnabled: _isButtonEnabled,
+            );
+          },
+        ),
+      ).then((_) {
+        _controller.clear(); // Clear the text field when the dialog is closed
+        setState(() {
+          _isButtonEnabled = false; // Reset the button state
+        });
+      }).catchError((error) {
+        print("Error closing dialog: $error");
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +84,7 @@ class HomeView extends StatelessWidget {
           style: TextStyles.h4.bold,
         ),
       ),
-      body: BlocProvider(
-        create: (context) =>
-            ProjectListCubit(projectService: locator<ProjectService>())
-              ..fetchAllTasks(),
-        child: const ProjectListSection(),
-      ),
+      body: const ProjectListSection(),
       floatingActionButton: FloatingActionButton(
         foregroundColor: Palette.light,
         backgroundColor: Palette.secondary,
@@ -42,38 +96,9 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  void _showCreateProjectDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          title: const Text('Create New Project'),
-          content: const Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                decoration: InputDecoration(labelText: 'Project Name'),
-              ),
-              TextField(
-                decoration: InputDecoration(labelText: 'Description'),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => context.pop(),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () => context.pop(),
-              child: const Text('Create'),
-            ),
-          ],
-        );
-      },
-    );
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

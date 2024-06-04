@@ -6,8 +6,7 @@ abstract class ProjectService {
 
   Future<ProjectListResponse> getAllProjects();
 
-  Future<ProjectResponse> createNewProject(
-      {required String projectId, required String projectName});
+  Future<ProjectResponse> createNewProject({required String projectName});
 
   Future<ProjectResponse> updateProject(
       {required String projectId, required String projectName});

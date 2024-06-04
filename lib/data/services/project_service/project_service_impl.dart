@@ -29,7 +29,6 @@ class ProjectServiceImpl implements ProjectService {
 
   @override
   Future<ProjectResponse> createNewProject({
-    required String projectId,
     required String projectName,
   }) async {
     try {

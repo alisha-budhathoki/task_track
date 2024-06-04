@@ -18,4 +18,18 @@ class ProjectVM with _$ProjectVM {
     required String url,
     String? viewStyle,
   }) = _ProjectVM;
+
+  factory ProjectVM.empty() => const ProjectVM(
+        id: '',
+        order: 0,
+        color: '',
+        name: '',
+        commentCount: 0,
+        isShared: false,
+        isFavorite: false,
+        isInboxProject: false,
+        isTeamInbox: false,
+        url: '',
+        viewStyle: '',
+      );
 }

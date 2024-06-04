@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:task_track/core/core_index.dart';
+import 'package:task_track/presentation/home/cubits/project_cubit.dart';
 import 'package:task_track/presentation/home/cubits/project_list_cubit.dart';
-import 'package:task_track/presentation/home/view_models/project_vm.dart';
 import 'package:task_track/ui/ui_index.dart';
 import 'package:task_track/ui/widgets/animations/slide_animation.dart';
 
@@ -40,12 +40,12 @@ class _ProjectList extends StatelessWidget {
     return Expanded(
       child: BlocBuilder<ProjectListCubit, ProjectistState>(
         builder: (context, state) {
-          return state.status.map(
-            initial: (_) => const Center(child: CircularProgressIndicator()),
-            loading: (_) => const Center(child: CircularProgressIndicator()),
-            empty: (_) => const Center(child: Text('No projects Available')),
-            error: (_) => const Center(child: Text('Error')),
-            loaded: (value) => GridView.builder(
+          return state.status.when(
+            initial: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            empty: () => const Center(child: Text('No projects Available')),
+            error: () => const Center(child: Text('Error')),
+            loaded: (projects) => GridView.builder(
               padding: const EdgeInsets.only(bottom: 16.0),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -53,9 +53,9 @@ class _ProjectList extends StatelessWidget {
                 mainAxisSpacing: 8.0,
                 childAspectRatio: 0.9,
               ),
-              itemCount: value.projectsVM.length,
+              itemCount: projects.length,
               itemBuilder: (context, index) {
-                final project = value.projectsVM[index];
+                final project = projects[index];
                 return _buildGridItems(context, project);
               },
             ),
@@ -66,7 +66,7 @@ class _ProjectList extends StatelessWidget {
   }
 }
 
-Widget _buildGridItems(BuildContext context, ProjectVM project) {
+Widget _buildGridItems(BuildContext context, ProjectCubit project) {
   return GestureDetector(
     onTap: () {
       context.push(Routes.secondScreen);
@@ -87,11 +87,12 @@ Widget _buildGridItems(BuildContext context, ProjectVM project) {
                 ),
                 const SizedBox(height: 16.0),
                 Text(
-                  project.name,
+                  project.initialProjecttVM.name,
                   style: TextStyles.bodyLarge.bold,
                 ),
                 const SizedBox(height: 8.0),
-                Text(project.name, style: TextStyles.bodyRegular),
+                Text(project.initialProjecttVM.name,
+                    style: TextStyles.bodyRegular),
               ],
             ),
           ),

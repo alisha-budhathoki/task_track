@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_track/data/models/projects/project_response.dart';
+import 'package:task_track/presentation/home/cubits/project_cubit.dart';
 import 'package:task_track/presentation/home/view_models/project_vm.dart';
 
 import 'package:task_track/data/services/project_service/project_service.dart';
@@ -12,7 +13,7 @@ class ProjectListCubit extends Cubit<ProjectistState> {
   ProjectListCubit({required this.projectService})
       : super(
           const ProjectistState(
-            projectsVM: [],
+            projects: [],
             status: ProjectListStatus.initial(),
           ),
         );
@@ -26,10 +27,10 @@ class ProjectListCubit extends Cubit<ProjectistState> {
           projectList.data.map(_mapProjectResponseToVM).toList();
       emit(
         state.copyWith(
-          projectsVM: projectVMList,
+          projects: projectVMList,
           status: projectVMList.isEmpty
               ? const ProjectListStatus.empty()
-              : ProjectListStatus.loaded(projectsVM: projectVMList),
+              : ProjectListStatus.loaded(projects: projectVMList),
         ),
       );
     } catch (e) {
@@ -41,8 +42,10 @@ class ProjectListCubit extends Cubit<ProjectistState> {
     }
   }
 
-  ProjectVM _mapProjectResponseToVM(ProjectResponse project) {
-    return ProjectVM(
+  ProjectCubit _mapProjectResponseToVM(ProjectResponse project) {
+    return ProjectCubit(
+      projectService: projectService,
+      projectVM: ProjectVM(
         id: project.id,
         order: project.order,
         color: project.color,
@@ -53,6 +56,8 @@ class ProjectListCubit extends Cubit<ProjectistState> {
         isInboxProject: project.isInboxProject,
         isTeamInbox: project.isTeamInbox,
         url: project.url,
-        viewStyle: project.viewStyle);
+        viewStyle: project.viewStyle,
+      ),
+    );
   }
 }

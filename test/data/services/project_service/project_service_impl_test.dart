@@ -95,8 +95,8 @@ void main() {
           .thenAnswer((_) async => projectResponseJson);
 
       // Act
-      final result = await projectService.createNewProject(
-          projectId: '2334106209', projectName: projectName);
+      final result =
+          await projectService.createNewProject(projectName: projectName);
 
       // Assert
       expect(result, equals(projectResponse));
@@ -116,8 +116,8 @@ void main() {
       final call = projectService.createNewProject;
 
       // Assert
-      expect(() => call(projectId: '2334106209', projectName: projectName),
-          throwsA(isA<ApiException>()));
+      expect(
+          () => call(projectName: projectName), throwsA(isA<ApiException>()));
       verify(mockRemoteSource.post(ProjectServiceImpl.addProjectEndPoint,
           body: {'name': projectName}));
       verifyNoMoreInteractions(mockRemoteSource);
