@@ -18,6 +18,7 @@ dependencies:
   json_annotation: ^4.9.0
   flutter_bloc: ^8.1.5
   universal_io: ^2.2.2
+  realm: ^2.3.0
 
 dev_dependencies:
   flutter_test:
