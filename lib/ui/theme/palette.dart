@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class Palette {
   Palette._();
-  static const primary = Color(0xFF007BFF); // Blue
-  static const secondary = Color(0xFFFFA500); // Orange
+  static const primary = Color(0xFFF7C439E);
+  static const secondary = Color(0xFFFA369BE);
+  static const blueColor = Color(0xFF007BFF);
   static const success = Color(0xFF28A745); // Green
   static const error = Color(0xFFDC3545); // Red
   static const warning = Color(0xFFFFC107); // Yellow

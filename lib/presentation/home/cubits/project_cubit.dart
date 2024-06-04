@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:task_track/core/core_index.dart';
@@ -9,7 +8,6 @@ part 'project_cubit.freezed.dart';
 part 'project_state.dart';
 
 class ProjectCubit extends Cubit<ProjectState> {
-  late TextEditingController textController;
   late ProjectVM initialProjecttVM;
 
   final ProjectService projectService;
@@ -37,11 +35,5 @@ class ProjectCubit extends Cubit<ProjectState> {
         ),
       );
     }
-  }
-
-  @override
-  Future<void> close() {
-    textController.dispose();
-    return super.close();
   }
 }

@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:task_track/core/core_index.dart';
 import 'package:task_track/presentation/error_screen.dart';
 import 'package:task_track/presentation/home/views/home_view.dart';
+import 'package:task_track/presentation/project_board/views/add_task_view.dart';
+import 'package:task_track/presentation/project_board/views/project_board_view.dart';
 import 'package:task_track/presentation/second_screen.dart';
 
 class AppRouter {
@@ -12,7 +14,6 @@ class AppRouter {
           routes: [
             GoRoute(
               path: '/',
-              builder: (context, state) => const HomeView(),
               pageBuilder: (context, state) => _buildPage(
                 state: state,
                 const HomeView(),
@@ -21,10 +22,25 @@ class AppRouter {
             ),
             GoRoute(
               path: '/secondScreen',
-              builder: (context, state) => const SecondScreen(),
               pageBuilder: (context, state) => _buildPage(
                 state: state,
                 const SecondScreen(),
+                barrierDismissible: true,
+              ),
+            ),
+            GoRoute(
+              path: '/projectBoardView/:id',
+              pageBuilder: (context, state) => _buildPage(
+                state: state,
+                ProjectBoardView(projectId: state.pathParameters['id'] ?? ''),
+                barrierDismissible: true,
+              ),
+            ),
+            GoRoute(
+              path: '/addTask',
+              pageBuilder: (context, state) => _buildPage(
+                state: state,
+                const AddTaskView(projectId: '123'),
                 barrierDismissible: true,
               ),
             ),

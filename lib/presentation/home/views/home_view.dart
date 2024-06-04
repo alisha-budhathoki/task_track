@@ -87,7 +87,7 @@ class HomeViewState extends State<HomeView> {
       body: const ProjectListSection(),
       floatingActionButton: FloatingActionButton(
         foregroundColor: Palette.light,
-        backgroundColor: Palette.secondary,
+        backgroundColor: Palette.primary,
         onPressed: () {
           _showCreateProjectDialog(context);
         },

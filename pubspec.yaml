@@ -19,6 +19,8 @@ dependencies:
   flutter_bloc: ^8.1.5
   universal_io: ^2.2.2
   realm: ^2.3.0
+  intl: ^0.19.0
+  intl_messages: ^2.3.0
 
 dev_dependencies:
   flutter_test:

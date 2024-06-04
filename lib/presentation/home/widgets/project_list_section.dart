@@ -5,7 +5,6 @@ import 'package:task_track/core/core_index.dart';
 import 'package:task_track/presentation/home/cubits/project_cubit.dart';
 import 'package:task_track/presentation/home/cubits/project_list_cubit.dart';
 import 'package:task_track/ui/ui_index.dart';
-import 'package:task_track/ui/widgets/animations/slide_animation.dart';
 
 class ProjectListSection extends StatelessWidget {
   const ProjectListSection({
@@ -33,7 +32,7 @@ class ProjectListSection extends StatelessWidget {
 }
 
 class _ProjectList extends StatelessWidget {
-  const _ProjectList({super.key});
+  const _ProjectList();
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +68,7 @@ class _ProjectList extends StatelessWidget {
 Widget _buildGridItems(BuildContext context, ProjectCubit project) {
   return GestureDetector(
     onTap: () {
-      context.push(Routes.secondScreen);
+      context.push(Routes.projectBoardViewWithId(project.initialProjecttVM.id));
     },
     child: FadeAnimation(
       durationMs: 300,
@@ -83,7 +82,7 @@ Widget _buildGridItems(BuildContext context, ProjectCubit project) {
                 const Icon(
                   Icons.folder,
                   size: 48.0,
-                  color: Palette.primary,
+                  color: Palette.secondary,
                 ),
                 const SizedBox(height: 16.0),
                 Text(
@@ -91,8 +90,10 @@ Widget _buildGridItems(BuildContext context, ProjectCubit project) {
                   style: TextStyles.bodyLarge.bold,
                 ),
                 const SizedBox(height: 8.0),
-                Text(project.initialProjecttVM.name,
-                    style: TextStyles.bodyRegular),
+                Text(
+                  project.initialProjecttVM.name,
+                  style: TextStyles.bodyRegular,
+                ),
               ],
             ),
           ),
