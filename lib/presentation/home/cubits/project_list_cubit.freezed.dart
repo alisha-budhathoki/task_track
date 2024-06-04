@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ProjectistState {
-  ProjectList get projectsVM => throw _privateConstructorUsedError;
+  List<ProjectVM> get projectsVM => throw _privateConstructorUsedError;
   ProjectListStatus get status => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,9 +30,8 @@ abstract class $ProjectistStateCopyWith<$Res> {
           ProjectistState value, $Res Function(ProjectistState) then) =
       _$ProjectistStateCopyWithImpl<$Res, ProjectistState>;
   @useResult
-  $Res call({ProjectList projectsVM, ProjectListStatus status});
+  $Res call({List<ProjectVM> projectsVM, ProjectListStatus status});
 
-  $ProjectListCopyWith<$Res> get projectsVM;
   $ProjectListStatusCopyWith<$Res> get status;
 }
 
@@ -56,20 +55,12 @@ class _$ProjectistStateCopyWithImpl<$Res, $Val extends ProjectistState>
       projectsVM: null == projectsVM
           ? _value.projectsVM
           : projectsVM // ignore: cast_nullable_to_non_nullable
-              as ProjectList,
+              as List<ProjectVM>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as ProjectListStatus,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ProjectListCopyWith<$Res> get projectsVM {
-    return $ProjectListCopyWith<$Res>(_value.projectsVM, (value) {
-      return _then(_value.copyWith(projectsVM: value) as $Val);
-    });
   }
 
   @override
@@ -89,10 +80,8 @@ abstract class _$$ProjectistStateImplCopyWith<$Res>
       __$$ProjectistStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ProjectList projectsVM, ProjectListStatus status});
+  $Res call({List<ProjectVM> projectsVM, ProjectListStatus status});
 
-  @override
-  $ProjectListCopyWith<$Res> get projectsVM;
   @override
   $ProjectListStatusCopyWith<$Res> get status;
 }
@@ -113,9 +102,9 @@ class __$$ProjectistStateImplCopyWithImpl<$Res>
   }) {
     return _then(_$ProjectistStateImpl(
       projectsVM: null == projectsVM
-          ? _value.projectsVM
+          ? _value._projectsVM
           : projectsVM // ignore: cast_nullable_to_non_nullable
-              as ProjectList,
+              as List<ProjectVM>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -127,10 +116,18 @@ class __$$ProjectistStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProjectistStateImpl implements _ProjectistState {
-  const _$ProjectistStateImpl({required this.projectsVM, required this.status});
+  const _$ProjectistStateImpl(
+      {required final List<ProjectVM> projectsVM, required this.status})
+      : _projectsVM = projectsVM;
 
+  final List<ProjectVM> _projectsVM;
   @override
-  final ProjectList projectsVM;
+  List<ProjectVM> get projectsVM {
+    if (_projectsVM is EqualUnmodifiableListView) return _projectsVM;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_projectsVM);
+  }
+
   @override
   final ProjectListStatus status;
 
@@ -144,13 +141,14 @@ class _$ProjectistStateImpl implements _ProjectistState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProjectistStateImpl &&
-            (identical(other.projectsVM, projectsVM) ||
-                other.projectsVM == projectsVM) &&
+            const DeepCollectionEquality()
+                .equals(other._projectsVM, _projectsVM) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, projectsVM, status);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_projectsVM), status);
 
   @JsonKey(ignore: true)
   @override
@@ -162,11 +160,11 @@ class _$ProjectistStateImpl implements _ProjectistState {
 
 abstract class _ProjectistState implements ProjectistState {
   const factory _ProjectistState(
-      {required final ProjectList projectsVM,
+      {required final List<ProjectVM> projectsVM,
       required final ProjectListStatus status}) = _$ProjectistStateImpl;
 
   @override
-  ProjectList get projectsVM;
+  List<ProjectVM> get projectsVM;
   @override
   ProjectListStatus get status;
   @override
@@ -182,7 +180,7 @@ mixin _$ProjectListStatus {
     required TResult Function() empty,
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<ProjectVM> projectsVM) loaded,
     required TResult Function() error,
   }) =>
       throw _privateConstructorUsedError;
@@ -191,7 +189,7 @@ mixin _$ProjectListStatus {
     TResult? Function()? empty,
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<ProjectVM> projectsVM)? loaded,
     TResult? Function()? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -200,7 +198,7 @@ mixin _$ProjectListStatus {
     TResult Function()? empty,
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<ProjectVM> projectsVM)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) =>
@@ -294,7 +292,7 @@ class _$EmptyImpl implements Empty {
     required TResult Function() empty,
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<ProjectVM> projectsVM) loaded,
     required TResult Function() error,
   }) {
     return empty();
@@ -306,7 +304,7 @@ class _$EmptyImpl implements Empty {
     TResult? Function()? empty,
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<ProjectVM> projectsVM)? loaded,
     TResult? Function()? error,
   }) {
     return empty?.call();
@@ -318,7 +316,7 @@ class _$EmptyImpl implements Empty {
     TResult Function()? empty,
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<ProjectVM> projectsVM)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -414,7 +412,7 @@ class _$InitialImpl implements Initial {
     required TResult Function() empty,
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<ProjectVM> projectsVM) loaded,
     required TResult Function() error,
   }) {
     return initial();
@@ -426,7 +424,7 @@ class _$InitialImpl implements Initial {
     TResult? Function()? empty,
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<ProjectVM> projectsVM)? loaded,
     TResult? Function()? error,
   }) {
     return initial?.call();
@@ -438,7 +436,7 @@ class _$InitialImpl implements Initial {
     TResult Function()? empty,
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<ProjectVM> projectsVM)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -534,7 +532,7 @@ class _$LoadingImpl implements Loading {
     required TResult Function() empty,
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<ProjectVM> projectsVM) loaded,
     required TResult Function() error,
   }) {
     return loading();
@@ -546,7 +544,7 @@ class _$LoadingImpl implements Loading {
     TResult? Function()? empty,
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<ProjectVM> projectsVM)? loaded,
     TResult? Function()? error,
   }) {
     return loading?.call();
@@ -558,7 +556,7 @@ class _$LoadingImpl implements Loading {
     TResult Function()? empty,
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<ProjectVM> projectsVM)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -618,6 +616,8 @@ abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<ProjectVM> projectsVM});
 }
 
 /// @nodoc
@@ -627,26 +627,58 @@ class __$$LoadedImplCopyWithImpl<$Res>
   __$$LoadedImplCopyWithImpl(
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? projectsVM = null,
+  }) {
+    return _then(_$LoadedImpl(
+      projectsVM: null == projectsVM
+          ? _value._projectsVM
+          : projectsVM // ignore: cast_nullable_to_non_nullable
+              as List<ProjectVM>,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$LoadedImpl implements Loaded {
-  const _$LoadedImpl();
+  const _$LoadedImpl({required final List<ProjectVM> projectsVM})
+      : _projectsVM = projectsVM;
+
+  final List<ProjectVM> _projectsVM;
+  @override
+  List<ProjectVM> get projectsVM {
+    if (_projectsVM is EqualUnmodifiableListView) return _projectsVM;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_projectsVM);
+  }
 
   @override
   String toString() {
-    return 'ProjectListStatus.loaded()';
+    return 'ProjectListStatus.loaded(projectsVM: $projectsVM)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadedImpl &&
+            const DeepCollectionEquality()
+                .equals(other._projectsVM, _projectsVM));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_projectsVM));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -654,10 +686,10 @@ class _$LoadedImpl implements Loaded {
     required TResult Function() empty,
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<ProjectVM> projectsVM) loaded,
     required TResult Function() error,
   }) {
-    return loaded();
+    return loaded(projectsVM);
   }
 
   @override
@@ -666,10 +698,10 @@ class _$LoadedImpl implements Loaded {
     TResult? Function()? empty,
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<ProjectVM> projectsVM)? loaded,
     TResult? Function()? error,
   }) {
-    return loaded?.call();
+    return loaded?.call(projectsVM);
   }
 
   @override
@@ -678,12 +710,12 @@ class _$LoadedImpl implements Loaded {
     TResult Function()? empty,
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<ProjectVM> projectsVM)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(projectsVM);
     }
     return orElse();
   }
@@ -730,7 +762,13 @@ class _$LoadedImpl implements Loaded {
 }
 
 abstract class Loaded implements ProjectListStatus {
-  const factory Loaded() = _$LoadedImpl;
+  const factory Loaded({required final List<ProjectVM> projectsVM}) =
+      _$LoadedImpl;
+
+  List<ProjectVM> get projectsVM;
+  @JsonKey(ignore: true)
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -774,7 +812,7 @@ class _$ErrorImpl implements Error {
     required TResult Function() empty,
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(List<ProjectVM> projectsVM) loaded,
     required TResult Function() error,
   }) {
     return error();
@@ -786,7 +824,7 @@ class _$ErrorImpl implements Error {
     TResult? Function()? empty,
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(List<ProjectVM> projectsVM)? loaded,
     TResult? Function()? error,
   }) {
     return error?.call();
@@ -798,7 +836,7 @@ class _$ErrorImpl implements Error {
     TResult Function()? empty,
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(List<ProjectVM> projectsVM)? loaded,
     TResult Function()? error,
     required TResult orElse(),
   }) {

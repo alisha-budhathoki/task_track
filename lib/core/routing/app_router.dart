@@ -12,10 +12,10 @@ class AppRouter {
           routes: [
             GoRoute(
               path: '/',
-              builder: (context, state) => HomeView(),
+              builder: (context, state) => const HomeView(),
               pageBuilder: (context, state) => _buildPage(
                 state: state,
-                HomeView(),
+                const HomeView(),
                 barrierDismissible: true,
               ),
             ),
@@ -24,7 +24,7 @@ class AppRouter {
               builder: (context, state) => const SecondScreen(),
               pageBuilder: (context, state) => _buildPage(
                 state: state,
-                SecondScreen(),
+                const SecondScreen(),
                 barrierDismissible: true,
               ),
             ),
@@ -47,12 +47,13 @@ Page _buildPage(
   if (PlatformExtensions.isIos) return CupertinoPage(child: child);
   if (PlatformExtensions.isAndroid) return MaterialPage(child: child);
   return CustomTransitionPage(
-      child: child,
-      key: state.pageKey,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      });
+    child: child,
+    key: state.pageKey,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return FadeTransition(
+        opacity: animation,
+        child: child,
+      );
+    },
+  );
 }

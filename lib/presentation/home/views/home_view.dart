@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:task_track/core/routing/routing_index.dart';
+import 'package:task_track/core/di/locator.dart';
+import 'package:task_track/data/services/project_service/project_service.dart';
+import 'package:task_track/presentation/home/cubits/project_list_cubit.dart';
+import 'package:task_track/presentation/home/widgets/widget_index.dart';
+import 'package:task_track/ui/theme/theme_index.dart';
+import 'package:task_track/ui/ui_index.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -9,86 +15,29 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Task Track'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Projects',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 0.8,
-                ),
-                itemCount: 10, // Replace with the actual number of projects
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      context.push(Routes.secondScreen);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 10,
-                              spreadRadius: 5,
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Hero(
-                                tag: 'project-icon-${index + 1}',
-                                child: Icon(Icons.folder,
-                                    size: 48, color: Colors.blue),
-                              ),
-                              SizedBox(height: 16),
-                              Text(
-                                'Project ${index + 1}', // Replace with project name
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                'Project description here', // Replace with project description
-                                style: TextStyle(color: Colors.grey[600]),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
+        leading: const Icon(
+          Icons.task,
+          color: Palette.primary,
+          size: 28.0,
+        ),
+        title: Text(
+          'Task Track',
+          style: TextStyles.h4.bold,
         ),
       ),
+      body: BlocProvider(
+        create: (context) =>
+            ProjectListCubit(projectService: locator<ProjectService>())
+              ..fetchAllTasks(),
+        child: const ProjectListSection(),
+      ),
       floatingActionButton: FloatingActionButton(
+        foregroundColor: Palette.light,
+        backgroundColor: Palette.secondary,
         onPressed: () {
           _showCreateProjectDialog(context);
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -101,8 +50,8 @@ class HomeView extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          title: Text('Create New Project'),
-          content: Column(
+          title: const Text('Create New Project'),
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
@@ -115,17 +64,12 @@ class HomeView extends StatelessWidget {
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
+              onPressed: () => context.pop(),
+              child: const Text('Cancel'),
             ),
             ElevatedButton(
-              onPressed: () {
-                // Add project creation logic here
-                Navigator.of(context).pop();
-              },
-              child: Text('Create'),
+              onPressed: () => context.pop(),
+              child: const Text('Create'),
             ),
           ],
         );

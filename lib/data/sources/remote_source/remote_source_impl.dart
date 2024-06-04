@@ -8,8 +8,10 @@ class RemoteSourceImpl implements RemoteSource {
   RemoteSourceImpl(this._dio);
 
   @override
-  Future<void> delete(String url,
-      {Map<String, dynamic> queryParams = const {}}) async {
+  Future<void> delete(
+    String url, {
+    Map<String, dynamic> queryParams = const {},
+  }) async {
     try {
       await _dio.delete(url, queryParameters: queryParams);
     } on DioException catch (e) {
@@ -18,22 +20,30 @@ class RemoteSourceImpl implements RemoteSource {
   }
 
   @override
-  Future<Map<String, dynamic>> get(String path,
-      {Map<String, dynamic> queryParameters = const {}}) async {
+  Future<Map<String, dynamic>> get(
+    String path, {
+    Map<String, dynamic> queryParameters = const {},
+  }) async {
     try {
       final response = await _dio.get(path, queryParameters: queryParameters);
-      return response.data as Map<String, dynamic>;
+      if (response.data is Map<String, dynamic>) {
+        return response.data as Map<String, dynamic>;
+      }
+      return {'data': response.data};
     } on DioException catch (e) {
       _handleDioError(e);
+      throw ApiException(
+        'Unexpected error occurred',
+      );
     }
-    throw ApiException(
-        'Unexpected error occurred'); // Ensure non-nullable return
   }
 
   @override
-  Future<Map<String, dynamic>> post(String url,
-      {Map<String, dynamic> body = const {},
-      Map<String, dynamic> queryParams = const {}}) async {
+  Future<Map<String, dynamic>> post(
+    String url, {
+    Map<String, dynamic> body = const {},
+    Map<String, dynamic> queryParams = const {},
+  }) async {
     try {
       final response =
           await _dio.post(url, data: body, queryParameters: queryParams);
@@ -42,13 +52,16 @@ class RemoteSourceImpl implements RemoteSource {
       _handleDioError(e);
     }
     throw ApiException(
-        'Unexpected error occurred'); // Ensure non-nullable return
+      'Unexpected error occurred',
+    ); // Ensure non-nullable return
   }
 
   @override
-  Future<Map<String, dynamic>> put(String url,
-      {Map<String, dynamic> body = const {},
-      Map<String, dynamic> queryParams = const {}}) async {
+  Future<Map<String, dynamic>> put(
+    String url, {
+    Map<String, dynamic> body = const {},
+    Map<String, dynamic> queryParams = const {},
+  }) async {
     try {
       final response =
           await _dio.put(url, data: body, queryParameters: queryParams);
@@ -57,7 +70,8 @@ class RemoteSourceImpl implements RemoteSource {
       _handleDioError(e);
     }
     throw ApiException(
-        'Unexpected error occurred'); // Ensure non-nullable return
+      'Unexpected error occurred',
+    ); // Ensure non-nullable return
   }
 
   void _handleDioError(DioException error) {
@@ -72,7 +86,6 @@ class RemoteSourceImpl implements RemoteSource {
         throw NetworkException('Receive timeout with API');
       case DioExceptionType.badResponse:
         _handleErrorResponse(error.response);
-        break;
       case DioExceptionType.badCertificate:
         throw ApiException('Bad certificate');
       case DioExceptionType.connectionError:
@@ -81,7 +94,8 @@ class RemoteSourceImpl implements RemoteSource {
         throw NetworkException('Unexpected error occurred: ${error.message}');
     }
     throw ApiException(
-        'Unhandled DioExceptionType: ${error.type}'); // Ensure exhaustive handling
+      'Unhandled DioExceptionType: ${error.type}',
+    ); // Ensure exhaustive handling
   }
 
   void _handleErrorResponse(Response? response) {
@@ -97,10 +111,12 @@ class RemoteSourceImpl implements RemoteSource {
         throw NotFoundException('Not found: ${response.data}');
       case 500:
         throw InternalServerException(
-            'Internal server error: ${response.data}');
+          'Internal server error: ${response.data}',
+        );
       default:
         throw ApiException(
-            'Received invalid status code: ${response.statusCode}');
+          'Received invalid status code: ${response.statusCode}',
+        );
     }
   }
 }

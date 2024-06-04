@@ -1,5 +1,5 @@
 import 'package:task_track/core/exceptions/exceptions.dart';
-import 'package:task_track/data/models/projects/project_list.dart';
+import 'package:task_track/data/models/projects/project_list_response.dart';
 import 'package:task_track/data/models/projects/project_response.dart';
 import 'package:task_track/data/services/project_service/project_service.dart';
 import 'package:task_track/data/sources/remote_source/remote_source.dart';
@@ -13,7 +13,7 @@ class ProjectServiceImpl implements ProjectService {
     return 'projects/$projectId';
   }
 
-  static String addProjectEndPoint = 'projects';
+  static String addProjectEndPoint = '/projects';
 
   @override
   Future<ProjectResponse> getSingleProject({required String projectId}) async {
@@ -28,8 +28,10 @@ class ProjectServiceImpl implements ProjectService {
   }
 
   @override
-  Future<ProjectResponse> createNewProject(
-      {required String projectId, required String projectName}) async {
+  Future<ProjectResponse> createNewProject({
+    required String projectId,
+    required String projectName,
+  }) async {
     try {
       final response = await remoteSource
           .post(addProjectEndPoint, body: {'name': projectName});
@@ -50,22 +52,25 @@ class ProjectServiceImpl implements ProjectService {
   }
 
   @override
-  Future<ProjectList> getAllProjects() async {
+  Future<ProjectListResponse> getAllProjects() async {
     try {
       final response = await remoteSource.get(addProjectEndPoint);
-      return ProjectList.fromJson(response);
+      return ProjectListResponse.fromJson(response);
     } catch (e) {
       throw ApiException(e.toString());
     }
   }
 
   @override
-  Future<ProjectResponse> updateProject(
-      {required String projectId, required String projectName}) async {
+  Future<ProjectResponse> updateProject({
+    required String projectId,
+    required String projectName,
+  }) async {
     try {
       final response = await remoteSource.post(
-          singleProjectEndpoint(projectId: projectId),
-          body: {'name': projectName});
+        singleProjectEndpoint(projectId: projectId),
+        body: {'name': projectName},
+      );
 
       return ProjectResponse.fromJson(response);
     } catch (e) {

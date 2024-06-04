@@ -10,12 +10,12 @@ class ProjectVM with _$ProjectVM {
     required int order,
     required String color,
     required String name,
-    required int commentCount,
+    @Default(0) int? commentCount,
     required bool isShared,
     required bool isFavorite,
     required bool isInboxProject,
     required bool isTeamInbox,
     required String url,
-    required String viewStyle,
+    String? viewStyle,
   }) = _ProjectVM;
 }

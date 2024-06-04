@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:task_track/core/exceptions/exceptions.dart';
-import 'package:task_track/data/models/projects/project_list.dart';
+import 'package:task_track/data/models/projects/project_list_response.dart';
 import 'package:task_track/data/models/projects/project_response.dart';
 import 'package:task_track/data/services/project_service/project_service_impl.dart';
 import 'mock_remote_source.mocks.dart';
@@ -69,7 +69,7 @@ void main() {
   });
 
   group('createNewProject', () {
-    final projectName = 'New Project';
+    const projectName = 'New Project';
     final projectResponseJson = {
       "id": "2334106209",
       "parent_id": null,
@@ -127,7 +127,7 @@ void main() {
   group('deleteProject', () {
     test('should call delete on remote source with correct endpoint', () async {
       // Arrange
-      when(mockRemoteSource.delete(any)).thenAnswer((_) async => null);
+      when(mockRemoteSource.delete(any)).thenAnswer((_) async {});
 
       // Act
       await projectService.deleteProject(projectId: '2334106209');
@@ -173,8 +173,8 @@ void main() {
       }
     ];
 
-    final projectList = ProjectList(
-        projectList: projectListJson
+    final projectList = ProjectListResponse(
+        data: projectListJson
             .map((json) => ProjectResponse.fromJson(json))
             .toList());
 
@@ -183,7 +183,7 @@ void main() {
         () async {
       // Arrange
       when(mockRemoteSource.get(any))
-          .thenAnswer((_) async => {'projectList': projectListJson});
+          .thenAnswer((_) async => {'data': projectListJson});
 
       // Act
       final result = await projectService.getAllProjects();
@@ -211,7 +211,7 @@ void main() {
   });
 
   group('updateProject', () {
-    final projectName = 'Updated Project';
+    const projectName = 'Updated Project';
     final projectResponseJson = {
       "id": "2334106209",
       "parent_id": null,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:task_track/ui/theme/theme_index.dart';
 import 'package:task_track/ui/ui_index.dart';
 
 class CustomCard extends StatelessWidget {

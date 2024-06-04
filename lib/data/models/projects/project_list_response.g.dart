@@ -1,19 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'project_list.dart';
+part of 'project_list_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ProjectListImpl _$$ProjectListImplFromJson(Map<String, dynamic> json) =>
-    _$ProjectListImpl(
-      projectList: (json['projectList'] as List<dynamic>)
+_$ProjectListResponseImpl _$$ProjectListResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ProjectListResponseImpl(
+      data: (json['data'] as List<dynamic>)
           .map((e) => ProjectResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$ProjectListImplToJson(_$ProjectListImpl instance) =>
+Map<String, dynamic> _$$ProjectListResponseImplToJson(
+        _$ProjectListResponseImpl instance) =>
     <String, dynamic>{
-      'projectList': instance.projectList,
+      'data': instance.data,
     };

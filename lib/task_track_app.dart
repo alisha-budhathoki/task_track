@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_track/core/di/locator.dart';
 import 'package:task_track/core/routing/routing_index.dart';
+import 'package:task_track/ui/ui_index.dart';
 
 class TaskTrackApp extends StatelessWidget {
   TaskTrackApp({super.key});
@@ -10,6 +11,7 @@ class TaskTrackApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      theme: AppTheme.lightTheme,
       routerDelegate: _appRouter.router.routerDelegate,
       routeInformationParser: _appRouter.router.routeInformationParser,
       routeInformationProvider: _appRouter.router.routeInformationProvider,

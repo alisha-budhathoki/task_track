@@ -21,13 +21,13 @@ mixin _$ProjectVM {
   int get order => throw _privateConstructorUsedError;
   String get color => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  int get commentCount => throw _privateConstructorUsedError;
+  int? get commentCount => throw _privateConstructorUsedError;
   bool get isShared => throw _privateConstructorUsedError;
   bool get isFavorite => throw _privateConstructorUsedError;
   bool get isInboxProject => throw _privateConstructorUsedError;
   bool get isTeamInbox => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
-  String get viewStyle => throw _privateConstructorUsedError;
+  String? get viewStyle => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProjectVMCopyWith<ProjectVM> get copyWith =>
@@ -45,13 +45,13 @@ abstract class $ProjectVMCopyWith<$Res> {
       int order,
       String color,
       String name,
-      int commentCount,
+      int? commentCount,
       bool isShared,
       bool isFavorite,
       bool isInboxProject,
       bool isTeamInbox,
       String url,
-      String viewStyle});
+      String? viewStyle});
 }
 
 /// @nodoc
@@ -72,13 +72,13 @@ class _$ProjectVMCopyWithImpl<$Res, $Val extends ProjectVM>
     Object? order = null,
     Object? color = null,
     Object? name = null,
-    Object? commentCount = null,
+    Object? commentCount = freezed,
     Object? isShared = null,
     Object? isFavorite = null,
     Object? isInboxProject = null,
     Object? isTeamInbox = null,
     Object? url = null,
-    Object? viewStyle = null,
+    Object? viewStyle = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -101,10 +101,10 @@ class _$ProjectVMCopyWithImpl<$Res, $Val extends ProjectVM>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      commentCount: null == commentCount
+      commentCount: freezed == commentCount
           ? _value.commentCount
           : commentCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       isShared: null == isShared
           ? _value.isShared
           : isShared // ignore: cast_nullable_to_non_nullable
@@ -125,10 +125,10 @@ class _$ProjectVMCopyWithImpl<$Res, $Val extends ProjectVM>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      viewStyle: null == viewStyle
+      viewStyle: freezed == viewStyle
           ? _value.viewStyle
           : viewStyle // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -147,13 +147,13 @@ abstract class _$$ProjectVMImplCopyWith<$Res>
       int order,
       String color,
       String name,
-      int commentCount,
+      int? commentCount,
       bool isShared,
       bool isFavorite,
       bool isInboxProject,
       bool isTeamInbox,
       String url,
-      String viewStyle});
+      String? viewStyle});
 }
 
 /// @nodoc
@@ -172,13 +172,13 @@ class __$$ProjectVMImplCopyWithImpl<$Res>
     Object? order = null,
     Object? color = null,
     Object? name = null,
-    Object? commentCount = null,
+    Object? commentCount = freezed,
     Object? isShared = null,
     Object? isFavorite = null,
     Object? isInboxProject = null,
     Object? isTeamInbox = null,
     Object? url = null,
-    Object? viewStyle = null,
+    Object? viewStyle = freezed,
   }) {
     return _then(_$ProjectVMImpl(
       id: null == id
@@ -201,10 +201,10 @@ class __$$ProjectVMImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      commentCount: null == commentCount
+      commentCount: freezed == commentCount
           ? _value.commentCount
           : commentCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       isShared: null == isShared
           ? _value.isShared
           : isShared // ignore: cast_nullable_to_non_nullable
@@ -225,10 +225,10 @@ class __$$ProjectVMImplCopyWithImpl<$Res>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      viewStyle: null == viewStyle
+      viewStyle: freezed == viewStyle
           ? _value.viewStyle
           : viewStyle // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -242,13 +242,13 @@ class _$ProjectVMImpl implements _ProjectVM {
       required this.order,
       required this.color,
       required this.name,
-      required this.commentCount,
+      this.commentCount = 0,
       required this.isShared,
       required this.isFavorite,
       required this.isInboxProject,
       required this.isTeamInbox,
       required this.url,
-      required this.viewStyle});
+      this.viewStyle});
 
   @override
   final String id;
@@ -261,7 +261,8 @@ class _$ProjectVMImpl implements _ProjectVM {
   @override
   final String name;
   @override
-  final int commentCount;
+  @JsonKey()
+  final int? commentCount;
   @override
   final bool isShared;
   @override
@@ -273,7 +274,7 @@ class _$ProjectVMImpl implements _ProjectVM {
   @override
   final String url;
   @override
-  final String viewStyle;
+  final String? viewStyle;
 
   @override
   String toString() {
@@ -336,13 +337,13 @@ abstract class _ProjectVM implements ProjectVM {
       required final int order,
       required final String color,
       required final String name,
-      required final int commentCount,
+      final int? commentCount,
       required final bool isShared,
       required final bool isFavorite,
       required final bool isInboxProject,
       required final bool isTeamInbox,
       required final String url,
-      required final String viewStyle}) = _$ProjectVMImpl;
+      final String? viewStyle}) = _$ProjectVMImpl;
 
   @override
   String get id;
@@ -355,7 +356,7 @@ abstract class _ProjectVM implements ProjectVM {
   @override
   String get name;
   @override
-  int get commentCount;
+  int? get commentCount;
   @override
   bool get isShared;
   @override
@@ -367,7 +368,7 @@ abstract class _ProjectVM implements ProjectVM {
   @override
   String get url;
   @override
-  String get viewStyle;
+  String? get viewStyle;
   @override
   @JsonKey(ignore: true)
   _$$ProjectVMImplCopyWith<_$ProjectVMImpl> get copyWith =>
